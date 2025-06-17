@@ -1,8 +1,8 @@
-import Quill from 'quill';
+import _Quill from 'quill';
 import katex from 'katex';
 
 // Definição de tipos para os Blots
-interface BlotStatic {
+interface _BlotStatic {
   blotName: string;
   tagName: string;
   className?: string;
