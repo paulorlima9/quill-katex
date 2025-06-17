@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quill KaTeX Module Demo</title>
+  
+  <!-- Estilos do Quill e KaTeX -->
+  <link href="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.snow.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css" rel="stylesheet">
+  
+  <style>
+    #editor-container {
+      height: 400px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .ql-katex, .ql-katex-inline {
+      cursor: pointer;
+    }
+    
+    .toolbar-section {
+      margin-bottom: 20px;
+      max-width: 800px;
+      margin: 0 auto 20px;
+    }
+    
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .examples {
+      max-width: 800px;
+      margin: 30px auto;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    
+    .examples h2 {
+      margin-top: 0;
+    }
+    
+    .examples pre {
+      background: #f5f5f5;
+      padding: 10px;
+      border-radius: 4px;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>Quill KaTeX Module Demo</h1>
+  
+  <div class="toolbar-section">
+    <p>Use os botões <strong>KaTeX</strong> e <strong>KaTeX Inline</strong> na barra de ferramentas para inserir fórmulas matemáticas.</p>
+  </div>
+  
+  <div id="editor-container">
+    <div id="editor">
+      <p>Escreva seu texto aqui e insira fórmulas matemáticas usando KaTeX.</p>
+      <p>Exemplo de fórmula em bloco:</p>
+      <p><br></p>
+      <p>Exemplo de fórmula inline: </p>
+    </div>
+  </div>
+  
+  <div class="examples">
+    <h2>Exemplos de Fórmulas</h2>
+    <p>Experimente estas fórmulas:</p>
+    <pre>E = mc^2</pre>
+    <pre>\sum_{i=1}^{n} i = \frac{n(n+1)}{2}</pre>
+    <pre>\int_{a}^{b} f(x) \, dx = F(b) - F(a)</pre>
+    <pre>f(x) = \frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2}</pre>
+  </div>
+  
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script>
+  
+  <!-- Carrega o módulo KaTeX para Quill -->
+  <script src="../dist/index.js"></script>
+  
+  <script>
+    // Configuração do Quill com o módulo KaTeX
+    var quill = new Quill('#editor', {
+      modules: {
+        toolbar: {
+          container: [
+            [{ 'header': [1, 2, 3, false] }],
+            ['bold', 'italic', 'underline', 'strike'],
+            ['katex', 'katex-inline'],
+            [{ 'color': [] }, { 'background': [] }],
+            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+            ['clean']
+          ],
+          handlers: {
+            'katex': function() {
+              // O handler é registrado pelo plugin
+            },
+            'katex-inline': function() {
+              // O handler é registrado pelo plugin
+            }
+          }
+        },
+        katex: {
+          toolbar: true
+        }
+      },
+      theme: 'snow'
+    });
+    
+    // Inserir exemplos de fórmulas
+    function insertExamples() {
+      // Inserir uma fórmula em bloco
+      const range1 = quill.getText().indexOf('Exemplo de fórmula em bloco:');
+      quill.insertEmbed(range1 + 28, 'katex', 'E = mc^2');
+      
+      // Inserir uma fórmula inline
+      const range2 = quill.getText().indexOf('Exemplo de fórmula inline:');
+      quill.insertEmbed(range2 + 27, 'katex-inline', 'E = mc^2');
+    }
+    
+    // Executar após o carregamento completo
+    window.onload = function() {
+      setTimeout(insertExamples, 500);
+    };
+  </script>
+</body>
+</html>
